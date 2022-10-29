@@ -1,4 +1,4 @@
-
+let pokemonRepository = (function () {
 let pokemonList = [
     {name:'Beedrill', height:" 3' 03 ",types:[' bug ', ' poison ']},
     {name:'Butterfree', height:" 3'07 ",types:[' bug ', ' flying ']},
@@ -15,6 +15,23 @@ pokemonList.forEach(function(pokemon){
               document.write(pokemon.name + " is " + pokemon.types + 'and' + pokemon.height + " tall , ");
        }
 });
+function add(pokemon) {
+    pokemonList.push(pokemon);
+  }
+
+  function getAll() {
+    return pokemonList;
+  }
+
+  return {
+    add: add,
+    getAll: getAll
+  };
+})();
+
+console.log(pokemonRepository.getAll()); 
+pokemonRepository.add({ name: 'cookie monster' });
+console.log(pokemonRepository.getAll()); 
 
 
      

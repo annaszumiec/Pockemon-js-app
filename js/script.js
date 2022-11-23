@@ -1,6 +1,8 @@
 let pokemonRepository = (function () {
   let pokemonList = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+//Adding modal Variable
+  let modalContainer = document.querySelector('#modal-container');
 
   function add(pokemon) {
     if (
@@ -58,9 +60,67 @@ let pokemonRepository = (function () {
     });
   }
 
+  //modal
+
+  function showModal(pokemon) {
+    modalContainer.innerHTML = '';
+    let modal = document.createElement('div');
+    modal.classList.add('modal');
+
+    let closeButtonElement = document.createElement('button');
+    closeButtonElement.classList.add('modal-close');
+    closeButtonElement.innerText = 'X';
+    closeButtonElement.addEventListener('click', hideModal);
+
+    let title = document.createElement('h1');
+    title.innerText = pokemon.name;
+
+    let pokemonImage = document.createElement('img');
+    pokemonImage.src = pokemon.imageUrl;
+
+    let pokemonHeight = document.createElement('p');
+    pokemonHeight.innerText = "Height: " + pokemon.height;
+
+    let pokemonTypes = document.createElement('p');
+    pokemonTypes.innerText = "Type: " + pokemon.types;
+    
+
+    modal.appendChild(title);
+    modal.appendChild(pokemonImage);
+    modal.appendChild(pokemonHeight);
+    modal.appendChild(pokemonTypes);
+
+    modal.appendChild(closeButtonElement);
+    modalContainer.appendChild(modal);
+
+
+    modalContainer.classList.add('is-visible');
+  }
+
+  function hideModal() {
+    modalContainer.classList.remove('is-visible');
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+      hideModal();  
+    }
+  });
+  
+  modalContainer.addEventListener('click', (e) => {
+  
+    // close  overlay
+    let target = e.target;
+    if (target === modalContainer) {
+      hideModal();
+    }
+  });
+
   function showDetails(item) {
     pokemonRepository.loadDetails(item).then(function () {
-      console.log(item);
+      
+      // changing console.log(item); =>showModal()
+      showModal(item);
     });
   }
 
@@ -80,6 +140,3 @@ pokemonRepository.loadList().then(function () {
     pokemonRepository.addListItem(pokemon);
   });
 });
-
-
-     

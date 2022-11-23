@@ -1,6 +1,6 @@
 # Pockemon-js-app
 
-## Building simple client-side application that can communicate with an external API.
+## Client-side application that can communicate with an external API.
 
 Key Features :
 - Load data from an external source (API)
